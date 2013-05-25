@@ -10,7 +10,12 @@ describe "StaticPages" do
 
     it "haz content 'Bearded Squid'" do
       visit '/static_pages/home'
-      page.should have_content('Bearded Squid')
+      page.should have_selector('h1', text: 'Bearded Squid')
+    end
+    
+    it "haz tittle 'home' " do
+      visit '/static_pages/home'
+      page.should have_selector('title', text: " | Home")
     end
   end
   
@@ -22,7 +27,12 @@ describe "StaticPages" do
     
     it "haz content 'Help'" do
       visit '/static_pages/help'
-      page.should have_content('Help')
+      page.should have_selector('h1', text: 'Help')
+    end
+    
+    it "haz tittle 'Help' " do
+      visit '/static_pages/help'
+      page.should have_selector('title', text: " | Help")
     end
   end
   
@@ -34,7 +44,12 @@ describe "StaticPages" do
     
     it "haz content 'About'" do
       visit '/static_pages/about'
-      page.should have_content('About')
+      page.should have_selector('h1', text: 'About')
+    end
+      
+    it "haz tittle 'About' " do
+      visit '/static_pages/about'
+      page.should have_selector('title', text: " | About")
     end
   end
 end
