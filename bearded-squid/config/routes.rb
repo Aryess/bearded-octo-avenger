@@ -1,14 +1,13 @@
 BeardedSquid::Application.routes.draw do
-  #get "static_pages/home"
-  match '/home', to:'static_pages#home' , via: 'get'
-  #get "static_pages/help"
-  match '/help', to:'static_pages#help' , via: 'get'
-  #get "static_pages/about"
-  match '/about', to:'static_pages#about' , via: 'get'
-  #get "static_pages/contact"
+  get "users/new"
+  
+  match '/home',    to:'static_pages#home' ,    via: 'get'
+  match '/help',    to:'static_pages#help' ,    via: 'get'
+  match '/about',   to:'static_pages#about' ,   via: 'get'
   match '/contact', to:'static_pages#contact' , via: 'get'
-  root  to:'static_pages#home'
-
+  match '/signup',  to:'users#new',             via: 'get'
+  root              to:'static_pages#home'
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
