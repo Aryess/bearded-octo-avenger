@@ -44,11 +44,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/static_pages/home">BeardedSquid</a>
+          <%= link_to "BeardedSquid", home_path, class: "brand"  %>
           <div class="container nav-collapse">
-            <ul class="nav">
-              <li><%= link_to "Help", "/static_pages/help"  %></li>
-              <li><%= link_to "About", "/static_pages/about"  %></li>
+            <ul class="nav pull-right">
+              <li><%= link_to "Help", help_path  %></li>
+              <li><%= link_to "About", about_path  %></li>
+              <li><%= link_to "Login", '#'  %></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>

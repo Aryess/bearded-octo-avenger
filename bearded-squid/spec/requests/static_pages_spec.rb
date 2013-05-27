@@ -2,54 +2,71 @@ require 'spec_helper'
 
 describe "StaticPages" do
   describe "Home page" do
-    it "works! (now write some real specs)" do
+    it "works!" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      get "static_pages/home"
+      get home_path
       response.status.should be(200)
     end
 
     it "haz content 'Bearded Squid'" do
-      visit '/static_pages/home'
+      visit home_path
       page.should have_selector('h1', text: 'Bearded Squid')
     end
     
     it "haz tittle 'home' " do
-      visit '/static_pages/home'
+      visit home_path
       page.should have_selector('title', text: " | Home")
     end
   end
   
   describe "Help page" do
     it "works!" do
-      get "static_pages/help"
+      get help_path
       response.status.should be(200)
     end
     
     it "haz content 'Help'" do
-      visit '/static_pages/help'
+      visit help_path
       page.should have_selector('h1', text: 'Help')
     end
     
     it "haz tittle 'Help' " do
-      visit '/static_pages/help'
+      visit help_path
       page.should have_selector('title', text: " | Help")
     end
   end
   
   describe "About page" do
     it "works!" do
-      get "static_pages/about"
+      get about_path
       response.status.should be(200)
     end
     
     it "haz content 'About'" do
-      visit '/static_pages/about'
+      visit about_path
       page.should have_selector('h1', text: 'About')
     end
       
     it "haz tittle 'About' " do
-      visit '/static_pages/about'
+      visit about_path
       page.should have_selector('title', text: " | About")
+    end
+  end
+  
+  describe "Contact page" do
+    it "works!" do
+      get contact_path
+      response.status.should be(200)
+    end
+    
+    it "haz content 'Contact'" do
+      visit contact_path
+      page.should have_selector('h1', text: 'Contact')
+    end
+      
+    it "haz tittle 'Contact' " do
+      visit contact_path
+      page.should have_selector('title', text: " | Contact")
     end
   end
 end
