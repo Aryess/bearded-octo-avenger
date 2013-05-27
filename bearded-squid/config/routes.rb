@@ -8,10 +8,6 @@ BeardedSquid::Application.routes.draw do
   #get "static_pages/contact"
   match '/contact', to:'static_pages#contact' , via: 'get'
   root  to:'static_pages#home'
-  resources :microposts
-
-
-  resources :users
 
 
   # The priority is based upon order of creation:
