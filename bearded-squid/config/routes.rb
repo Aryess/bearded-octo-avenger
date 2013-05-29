@@ -1,5 +1,5 @@
 BeardedSquid::Application.routes.draw do
-  get "users/new"
+  resources :users
   
   match '/home',    to:'static_pages#home' ,    via: 'get'
   match '/help',    to:'static_pages#help' ,    via: 'get'
@@ -8,7 +8,6 @@ BeardedSquid::Application.routes.draw do
   match '/signup',  to:'users#new',             via: 'get'
   root              to:'static_pages#home'
   
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
