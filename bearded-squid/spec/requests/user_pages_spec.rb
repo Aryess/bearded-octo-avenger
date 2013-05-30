@@ -20,7 +20,7 @@ describe "UserPages" do
     let(:user) { FactoryGirl.create(:user)}
     before{ visit user_path(user) }
     
-    it { should have_selector('title', text:"User profile") }
+    it { should have_selector('title', text: user.name + " - profile") }
     it { should have_selector('h1', text: user.name) }
   end
   
@@ -34,7 +34,7 @@ describe "UserPages" do
       end
     end
     
-    describe "with invalid info" do
+    describe "with valid info" do
       before do
         fill_in "Name",         with: "Username McDerpington"
         fill_in "Email",        with: "yoann.celton@gmail.com"
@@ -44,6 +44,11 @@ describe "UserPages" do
       
       it "should create account" do
         expect { click_button submit }.to change(User, :count).by(1)
+      end
+      
+      describe "after saving user" do
+        before { click_button submit }
+        it {should have_link("Sign out", href: signout_path) }
       end
     end
   end
