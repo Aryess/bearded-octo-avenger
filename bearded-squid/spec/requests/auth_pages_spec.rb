@@ -13,9 +13,6 @@ describe "AuthPages" do
     
     describe "with no info" do
       before { click_button submit }
-      #it "should not create account" do
-      #  expect {  }.not_to change(Session, :count)
-      #end
       
       it { should have_selector('div.alert.alert-error', text: 'Invalid') }
     end
@@ -37,14 +34,11 @@ describe "AuthPages" do
       
     describe "with valid info" do
       let(:user) { FactoryGirl.create(:user) }
-      before do
-        fill_in "Email",    with: user.email.upcase
-        fill_in "Password", with: user.password
-        click_button submit
-      end
+      before { sign_in user}
       
       it { should have_selector('title', text: user.name + " - profile") }
       it { should have_link('Profile', href: user_path(user)) }
+      it { should have_link('Settings', href: edit_user_path(user)) }
       it { should_not have_link('Sign in', href: signin_path) }
       it { should have_link('Sign out', href: signout_path) }
       
@@ -53,6 +47,9 @@ describe "AuthPages" do
         it { should have_selector('div.alert.alert-success', text: "See you soon") }
         it { should have_selector('title', text: "Home") }
         it { should have_link("Sign in", href: signin_path) }
+        it { should_not have_link('Profile', href: user_path(user)) }
+        it { should_not have_link('Settings', href: edit_user_path(user)) }
+        it { should_not have_link('Sign out', href: signout_path) }
       end
     end
   end
