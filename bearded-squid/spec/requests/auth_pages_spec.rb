@@ -55,35 +55,83 @@ describe "AuthPages" do
   end
   
   describe "Authorization" do
+    describe "as non-admin user" do
+      let(:user) { FactoryGirl.create(:user) }
+      let(:non_admin) { FactoryGirl.create(:user) }
+
+        before { sign_in non_admin }
+
+      describe "submitting a DELETE request to the Users#destroy action" do
+        before { delete user_path(user) }
+        specify { response.should redirect_to(root_path) }        
+      end
+      
+      describe "Should not access" do
+        it "new user page" do
+          get new_user_path
+          response.should redirect_to(root_path)
+        end
+        
+        it "create action" do
+          user2 = User.new(name: "ezrzer", email: "retetert@fegerg.fr", password: "pwd", password_confirmation: "pwd")
+          post '/users/', user: {name: "ezrzer", email: "retetert@fegerg.fr", password: "pwd", password_confirmation: "pwd"}
+          response.should redirect_to(root_path)
+        end
+      end
+    end
+    
     describe "For non signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
       
-      describe "visit edit page" do
-        before{ visit edit_user_path(user) }
-        it { should have_selector('title', text: "Sign in")}
-      end
-      
-      describe "Try to update user" do
-        before {put user_path(user) }
-        specify {response.should redirect_to(signin_path)}
+      describe "in user controller" do
+        describe "visit edit page" do
+          before{ visit edit_user_path(user) }
+          it { should have_selector('title', text: "Sign in")}
+        end
+        
+        describe "Try to update user" do
+          before {put user_path(user) }
+          specify {response.should redirect_to(signin_path)}
+        end
+        
+        describe "Visit index" do
+          before {visit users_path}
+          it {should have_selector('title', text: "Sign in")}
+        end
       end
     end
     
     describe "As wrong user" do
-      let(:user) { FactoryGirl.create(:user) }
-      let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@gmail.com") }
-      before { sign_in user }
-      
-      describe "Visiting users#edit" do
-        before {visit edit_user_path(wrong_user)}
-        it {should_not have_selector('title', text: "Edit user")}
-      end
-      
-      describe "Trying to PUT to users" do
-        before {put user_path(wrong_user)}
-        specify {response.should redirect_to(root_path)}
+      describe "in user controller" do
+        let(:user) { FactoryGirl.create(:user) }
+        let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@gmail.com") }
+        before { sign_in user }
+        
+        describe "Visiting users#edit" do
+          before {visit edit_user_path(wrong_user)}
+          it {should_not have_selector('title', text: "Edit user")}
+        end
+        
+        describe "Trying to PUT to users" do
+          before {put user_path(wrong_user)}
+          specify {response.should redirect_to(root_path)}
+        end
       end
     end
+    
+    describe "As admin" do
+      let(:admin) {FactoryGirl.create(:admin)}
+      before{sign_in admin}
+      
+      describe "No suicide" do
+        
+        it "should not succeed" do
+          delete user_path(admin.id)
+          response.should redirect_to(users_path)
+        end
+      end
+    end
+  
   end
   
 end
