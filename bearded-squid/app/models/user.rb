@@ -9,6 +9,11 @@ class User < ActiveRecord::Base
   validates :password, length: {minimum: 6}
   before_save { self.email = email.downcase }
   before_save :create_remember_token
+  has_many :microposts, dependent: :destroy
+  
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
   
   private
     def create_remember_token

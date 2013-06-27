@@ -14,6 +14,7 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page], per_page: 15)
   end
   
   def create
@@ -47,9 +48,7 @@ class UsersController < ApplicationController
   end
   
   private
-    def signed_in_user
-      redirect_to signin_url, notice: "Please sign in."  unless signed_in?
-    end
+    
     
     def not_signedin
       redirect_to root_path, notice: "Nothing to see here."  if signed_in?
